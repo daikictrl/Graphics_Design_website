@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import ThemeToggle from './ThemeToggle';
@@ -16,7 +16,7 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
@@ -88,10 +88,10 @@ export default function Navbar() {
           <div className="md:hidden flex items-center space-x-4">
             <ThemeToggle />
             <button
-              className="text-foreground"
+              className="p-2 rounded-none border border-border text-foreground hover:bg-muted transition-colors flex items-center justify-center"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>
