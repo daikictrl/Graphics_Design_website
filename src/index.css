@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Helvetica Neue", Arial, sans-serif;
+  --font-heading: "Helvetica Neue", Arial, sans-serif;
+  
+  --color-background: var(--background);
+  --color-foreground: var(--text-primary);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--text-primary);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--text-secondary);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--button-text);
+  --color-muted: var(--card-bg);
+  --color-muted-foreground: var(--text-secondary);
+  --color-border: var(--border);
+}
+
+@layer base {
+  :root {
+    --background: #FFFFFF;
+    --primary: #FFFFFF;
+    --secondary: #F5F5F5;
+    --text-primary: #111111;
+    --text-secondary: #555555;
+    --accent: #F27D26;
+    --border: #E0E0E0;
+    --card-bg: #F9F9F9;
+    --hover: #F0F0F0;
+    --button-bg: #F27D26;
+    --button-text: #FFFFFF;
+  }
+
+  .dark {
+    --background: #0A0A0A;
+    --primary: #0A0A0A;
+    --secondary: #111111;
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255, 255, 255, 0.6);
+    --accent: #F27D26;
+    --border: rgba(255, 255, 255, 0.1);
+    --card-bg: #151515;
+    --hover: #222222;
+    --button-bg: #F27D26;
+    --button-text: #000000;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-accent selection:text-white transition-colors duration-300;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+
+  * {
+    @apply border-border;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
