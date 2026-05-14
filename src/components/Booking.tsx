@@ -168,7 +168,7 @@ Deadline: ${formData.deadline || 'Not specified'}`;
                     value={formData.budget}
                     onChange={handleChange}
                     className="w-full bg-background border border-border rounded-none px-4 py-3 text-[12px] text-foreground focus:outline-none focus:border-accent transition-colors"
-                    placeholder="e.g. $500 - $1000"
+                    placeholder="e.g. 500 000 - 1 000 000 FCFA"
                   />
                 </div>
                 <div className="space-y-2">
