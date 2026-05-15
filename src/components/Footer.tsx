@@ -1,4 +1,3 @@
-import { Instagram, Twitter, Linkedin, Facebook } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -15,20 +14,6 @@ export default function Footer() {
             <p className="text-muted-foreground text-[0.9rem] leading-[1.6] font-normal max-w-md mb-8">
               A premium creative agency dedicated to transforming your ideas into compelling visual narratives that command attention and drive results.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 rounded-none bg-muted border border-border flex items-center justify-center text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent transition-colors">
-                <Instagram size={16} />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-none bg-muted border border-border flex items-center justify-center text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent transition-colors">
-                <Twitter size={16} />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-none bg-muted border border-border flex items-center justify-center text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent transition-colors">
-                <Linkedin size={16} />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-none bg-muted border border-border flex items-center justify-center text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent transition-colors">
-                <Facebook size={16} />
-              </a>
-            </div>
           </div>
 
           <div>

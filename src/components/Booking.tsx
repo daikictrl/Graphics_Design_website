@@ -39,8 +39,8 @@ Budget: ${formData.budget || 'Not specified'}
 Deadline: ${formData.deadline || 'Not specified'}`;
 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappNumber = "237651928589"; // Admin's WhatsApp number
-    
+    const whatsappNumber = "237696277335"; // Admin's WhatsApp number (no + or spaces for wa.me)
+
     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
   };
 
