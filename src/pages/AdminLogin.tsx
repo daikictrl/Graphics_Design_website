@@ -1,46 +1,46 @@
-import { useState, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'motion/react';
-import { LogIn } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "motion/react";
+import { LogIn } from "lucide-react";
 
 export default function AdminLogin() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useState(() => {
-    const token = localStorage.getItem('admin_token');
+  useEffect(() => {
+    const token = localStorage.getItem("admin_token");
     if (token) {
-      navigate('/admin/dashboard', { replace: true });
+      navigate("/admin/dashboard", { replace: true });
     }
-  });
+  }, [navigate]);
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || 'Login failed');
+        setError(data.error || "Login failed");
         return;
       }
 
-      localStorage.setItem('admin_token', data.token);
-      localStorage.setItem('admin_email', data.email);
-      navigate('/admin/dashboard', { replace: true });
+      localStorage.setItem("admin_token", data.token);
+      localStorage.setItem("admin_email", data.email);
+      navigate("/admin/dashboard", { replace: true });
     } catch {
-      setError('Network error. Is the server running?');
+      setError("Network error. Is the server running?");
     } finally {
       setLoading(false);
     }
@@ -62,7 +62,10 @@ export default function AdminLogin() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-muted border border-border p-8 rounded-none">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-muted border border-border p-8 rounded-none"
+        >
           <h2 className="text-[10px] uppercase tracking-[2px] font-bold text-accent mb-6">
             Sign In
           </h2>
@@ -106,7 +109,7 @@ export default function AdminLogin() {
             disabled={loading}
             className="w-full bg-accent text-accent-foreground font-bold text-[12px] uppercase tracking-[1px] px-8 py-4 rounded-none hover:bg-accent/90 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? "Signing in..." : "Sign In"}
             <LogIn size={18} />
           </button>
 
