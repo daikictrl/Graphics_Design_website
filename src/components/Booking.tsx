@@ -13,35 +13,63 @@ export default function Booking() {
     budget: '',
     deadline: ''
   });
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'saving' | 'saved' | 'error' | 'opening'>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Format the message for WhatsApp
-    const message = `Hello, I would like to book a service.
+    setSubmitStatus('saving');
 
-Name: ${formData.name}
+    try {
+      const res = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          service: formData.service,
+          description: formData.description,
+          budget: formData.budget || undefined,
+          deadline: formData.deadline || undefined,
+        }),
+      });
 
-Phone: ${formData.phone}
+      if (!res.ok) {
+        console.error('Failed to save booking to server');
+        setSubmitStatus('error');
+      } else {
+        setSubmitStatus('saved');
+      }
+    } catch (err) {
+      console.error('Network error saving booking:', err);
+      setSubmitStatus('error');
+    }
 
-Email: ${formData.email}
+    setSubmitStatus('opening');
 
-Service: ${formData.service}
-
-Project Details: ${formData.description}
-
-Budget: ${formData.budget || 'Not specified'}
-
-Deadline: ${formData.deadline || 'Not specified'}`;
+    const message = `Hello, I would like to book a service.\n\nName: ${formData.name}\n\nPhone: ${formData.phone}\n\nEmail: ${formData.email}\n\nService: ${formData.service}\n\nProject Details: ${formData.description}\n\nBudget: ${formData.budget || 'Not specified'}\n\nDeadline: ${formData.deadline || 'Not specified'}`;
 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappNumber = "237696277335"; // Admin's WhatsApp number (no + or spaces for wa.me)
+    const whatsappNumber = "237696277335";
 
     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+
+    setTimeout(() => {
+      setSubmitStatus('idle');
+      setFormData({
+        name: '',
+        phone: '',
+        email: '',
+        service: '',
+        description: '',
+        budget: '',
+        deadline: ''
+      });
+    }, 2000);
   };
 
   return (
@@ -186,11 +214,30 @@ Deadline: ${formData.deadline || 'Not specified'}`;
 
               <button 
                 type="submit"
-                className="w-full bg-accent text-accent-foreground font-bold text-[12px] uppercase tracking-[1px] px-8 py-4 rounded-none hover:bg-accent/90 transition-all flex items-center justify-center gap-2 group"
+                disabled={submitStatus === 'saving' || submitStatus === 'opening'}
+                className="w-full bg-accent text-accent-foreground font-bold text-[12px] uppercase tracking-[1px] px-8 py-4 rounded-none hover:bg-accent/90 transition-all flex items-center justify-center gap-2 group disabled:opacity-50"
               >
-                Send via WhatsApp
-                <Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                {submitStatus === 'saving' && 'Saving...'}
+                {submitStatus === 'opening' && 'Opening WhatsApp...'}
+                {submitStatus === 'saved' && 'Saved! Opening WhatsApp...'}
+                {submitStatus === 'error' && 'Sending via WhatsApp...'}
+                {submitStatus === 'idle' && (
+                  <>
+                    Send via WhatsApp
+                    <Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </>
+                )}
               </button>
+              {submitStatus === 'saved' && (
+                <p className="text-green-500 text-[10px] uppercase tracking-[1px] mt-3 text-center">
+                  ✓ Booking saved to system
+                </p>
+              )}
+              {submitStatus === 'error' && (
+                <p className="text-yellow-500 text-[10px] uppercase tracking-[1px] mt-3 text-center">
+                  ⚠ Could not save to server — WhatsApp opened instead
+                </p>
+              )}
             </form>
           </motion.div>
 
