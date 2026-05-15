@@ -8,8 +8,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           
           <div className="col-span-1 md:col-span-2">
-            <a href="#home" className="text-[1.2rem] font-heading font-extrabold tracking-[-0.5px] inline-block mb-6">
-              IMPACT GRAPHICS<span className="text-accent">.</span>
+            <a href="#home" className="flex items-center gap-3 inline-flex mb-6">
+              <img
+                src="/logo.png"
+                alt="Impact Graphics logo"
+                className="h-10 w-auto rounded-sm border border-border bg-primary p-1 object-contain"
+              />
+              <span className="text-[1.2rem] font-heading font-extrabold tracking-[-0.5px]">
+                IMPACT GRAPHICS<span className="text-accent">.</span>
+              </span>
             </a>
             <p className="text-muted-foreground text-[0.9rem] leading-[1.6] font-normal max-w-md mb-8">
               A premium creative agency dedicated to transforming your ideas into compelling visual narratives that command attention and drive results.

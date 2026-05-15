@@ -51,8 +51,15 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <a href="#home" className="text-[1.2rem] font-heading font-extrabold tracking-[-0.5px]">
-            IMPACT GRAPHICS<span className="text-accent">.</span>
+          <a href="#home" className="flex items-center gap-3">
+            <img
+              src="/logo.png"
+              alt="Impact Graphics logo"
+              className="h-10 w-auto rounded-sm border border-border bg-muted p-1 object-contain"
+            />
+            <span className="text-[1.1rem] font-heading font-extrabold tracking-[-0.5px] uppercase text-foreground">
+              Impact Graphics<span className="text-accent">.</span>
+            </span>
           </a>
 
           {/* Desktop Nav */}
